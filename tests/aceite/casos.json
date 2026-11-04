@@ -1,0 +1,92 @@
+{
+  "instrucoes": [
+    "Casos de aceite do Trabalho 2. As ENTRADAS abaixo sao sugestoes que dao para calcular a mao; troque-as se quiser.",
+    "Voce calcula o resultado a mao (papel, calculadora) e escreve em \"esperado\". Nao copie a saida do programa: o runner",
+    "nao mostra o valor calculado enquanto o caso esta com \"esperado\": null (PENDENTE).",
+    "Conferir: python -m trex3d.aceite   (no fim, python -m trex3d.aceite --estrito exige zero pendentes).",
+    "Convencoes: angulos em GRAUS, positivos no sentido anti-horario (mao direita); transformacoes aplicadas NA ORDEM da",
+    "lista; rot_y 90 leva z para x; profundidade = z do sistema do observador (maior = mais perto); tolerancia padrao 0.01."
+  ],
+  "casos": [
+    {
+      "id": "proj-1",
+      "tipo": "projecao",
+      "descricao": "Canto (0.6, 0.6, 0.6) do cubo girado 90 graus em y e levado 2 em x; camera frontal. esperado = [px, py, profundidade]",
+      "entrada": {
+        "camera": {"vrp": [0, 0, 0], "n": [0, 0, 1], "view_up": [0, 1, 0], "janela": [-4, -3, 4, 3], "viewport": [0, 0, 800, 600]},
+        "ponto": [0.6, 0.6, 0.6],
+        "transformacoes": [["rot_y", 90], ["translacao", 2, 0, 0]]
+      },
+      "esperado": null
+    },
+    {
+      "id": "proj-2",
+      "tipo": "projecao",
+      "descricao": "Canto (-0.6, -0.6, 0.6), mesma transformacao; camera com 30 graus de elevacao, n = (0, 0.5, raiz(3)/2). esperado = [px, py, profundidade]",
+      "entrada": {
+        "camera": {"vrp": [0, 0, 0], "n": [0, 0.5, 0.8660254037844386], "view_up": [0, 1, 0], "janela": [-4, -3, 4, 3], "viewport": [0, 0, 800, 600]},
+        "ponto": [-0.6, -0.6, 0.6],
+        "transformacoes": [["rot_y", 90], ["translacao", 2, 0, 0]]
+      },
+      "esperado": null
+    },
+    {
+      "id": "proj-3",
+      "tipo": "projecao",
+      "descricao": "Canto (0.6, -0.6, -0.6) com escala 2 e depois translacao (-1, 1, 0); camera de 30 graus. esperado = [px, py, profundidade]",
+      "entrada": {
+        "camera": {"vrp": [0, 0, 0], "n": [0, 0.5, 0.8660254037844386], "view_up": [0, 1, 0], "janela": [-4, -3, 4, 3], "viewport": [0, 0, 800, 600]},
+        "ponto": [0.6, -0.6, -0.6],
+        "transformacoes": [["escala", 2, 2, 2], ["translacao", -1, 1, 0]]
+      },
+      "esperado": null
+    },
+    {
+      "id": "ilum-1",
+      "tipo": "iluminacao",
+      "descricao": "Face de normal (0,1,0), Sol em (3,4,0), observador em +y. esperado = [R, G, B] (ka + kd*N.L + ks*(R.S)^n, com R = 2(N.L)N - L)",
+      "entrada": {
+        "material": {"ka": [0.1, 0.1, 0.1], "kd": [0.6, 0.5, 0.4], "ks": [0.4, 0.4, 0.4], "n": 4},
+        "luz": {"posicao": [3, 4, 0]},
+        "ponto": [0, 0, 0],
+        "normal": [0, 1, 0],
+        "observador": [0, 1, 0]
+      },
+      "esperado": null
+    },
+    {
+      "id": "ilum-2",
+      "tipo": "iluminacao",
+      "descricao": "Mesmo Sol, material e observador; face de normal (1,0,0). esperado = [R, G, B]",
+      "entrada": {
+        "material": {"ka": [0.1, 0.1, 0.1], "kd": [0.6, 0.5, 0.4], "ks": [0.4, 0.4, 0.4], "n": 4},
+        "luz": {"posicao": [3, 4, 0]},
+        "ponto": [0, 0, 0],
+        "normal": [1, 0, 0],
+        "observador": [0, 1, 0]
+      },
+      "esperado": null
+    },
+    {
+      "id": "rot-1",
+      "tipo": "rotacao_em_torno_de_ponto",
+      "descricao": "Ponto (3, 0, 1) girado 90 graus em y em torno do ponto (2, 0, 1). esperado = [x, y, z]",
+      "entrada": {"eixo": "y", "graus": 90, "centro": [2, 0, 1], "ponto": [3, 0, 1]},
+      "esperado": null
+    },
+    {
+      "id": "col-1",
+      "tipo": "colisao",
+      "descricao": "Cubo (lado 1.2) em (0, 0.6, 0); esfera de raio 0.6 em (1.0, 0.9, 0). esperado = true (colide) ou false",
+      "entrada": {"centro_cubo": [0, 0.6, 0], "lado": 1.2, "centro_esfera": [1.0, 0.9, 0], "raio": 0.6},
+      "esperado": null
+    },
+    {
+      "id": "col-2",
+      "tipo": "colisao",
+      "descricao": "Mesmo cubo; esfera de raio 0.6 em (1.1, 1.7, 0), perto de uma quina. esperado = true ou false",
+      "entrada": {"centro_cubo": [0, 0.6, 0], "lado": 1.2, "centro_esfera": [1.1, 1.7, 0], "raio": 0.6},
+      "esperado": null
+    }
+  ]
+}

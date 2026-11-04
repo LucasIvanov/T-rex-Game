@@ -1,2 +1,7 @@
 Docs/*
 *.pdf
+# gerado
+_saida/
+__pycache__/
+.pytest_cache/
+.venv/
